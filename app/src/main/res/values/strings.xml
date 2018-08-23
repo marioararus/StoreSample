@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">StoreSample</string>
+    <string name="sign_in">SIGN IN FACEBOOK</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="store_name">HEPHAESTUS</string>
+    <string name="best_store">BEST ONLINE STORE</string>
+    <string name="facebook_app_id">1965822980106996</string>
+    <string name="fb_login_protocol_scheme">fb1965822980106996</string>
 </resources>
