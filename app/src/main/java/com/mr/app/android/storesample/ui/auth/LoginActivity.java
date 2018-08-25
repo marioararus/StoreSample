@@ -14,6 +14,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.mr.app.android.storesample.R;
+import com.mr.app.android.storesample.ui.main.HomePageActivity;
 
 import java.util.Arrays;
 
@@ -22,7 +23,6 @@ import java.util.Arrays;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String EMAIL = "email";
     private LoginButton loginButton;
     private CallbackManager callbackManager;
 
@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         loginButton = findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList(EMAIL));
-        
+        loginButton.setReadPermissions("email", "public_profile");
+
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        Toast.makeText(LoginActivity.this,"Login Manager Success", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
                     }
 
                     @Override
