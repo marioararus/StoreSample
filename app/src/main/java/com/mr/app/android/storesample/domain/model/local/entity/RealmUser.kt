@@ -10,4 +10,5 @@ open class RealmUser(
         @PrimaryKey
         var id: Long = 0,
         var email: String = "",
-        var name: String = "") : RealmObject()
+        var name: String = "",
+        var isLoggedIn: Boolean = false) : RealmObject()

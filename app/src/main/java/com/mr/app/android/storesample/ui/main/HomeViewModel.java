@@ -4,10 +4,12 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.facebook.login.LoginManager;
 import com.mr.app.android.storesample.data.Company;
 import com.mr.app.android.storesample.data.Product;
 import com.mr.app.android.storesample.domain.model.local.LocalCompanyModel;
 import com.mr.app.android.storesample.domain.model.local.LocalProductModel;
+import com.mr.app.android.storesample.domain.model.local.LocalUserModel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,12 +21,14 @@ import java.util.Map;
 public class HomeViewModel extends ViewModel {
     private LocalProductModel localProductModel;
     private LocalCompanyModel localCompanyModel;
+    private LocalUserModel localUserModel;
 
     private MutableLiveData<Map<Company, List<Product>>> mapLiveData = new MutableLiveData<>();
 
     public HomeViewModel() {
         this.localProductModel = new LocalProductModel();
         this.localCompanyModel = new LocalCompanyModel();
+        this.localUserModel = new LocalUserModel();
     }
 
     public LiveData<Map<Company, List<Product>>> getCompaniesAndProducts() {
@@ -36,6 +40,11 @@ public class HomeViewModel extends ViewModel {
         mapLiveData.setValue(productsCompany);
 
         return mapLiveData;
+    }
+
+    public void logOut() {
+        LoginManager.getInstance().logOut();
+        localUserModel.logOutUser();
     }
 
 }

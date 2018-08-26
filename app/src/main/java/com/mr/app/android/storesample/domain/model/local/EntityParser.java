@@ -2,8 +2,10 @@ package com.mr.app.android.storesample.domain.model.local;
 
 import com.mr.app.android.storesample.data.Company;
 import com.mr.app.android.storesample.data.Product;
+import com.mr.app.android.storesample.data.User;
 import com.mr.app.android.storesample.domain.model.local.entity.RealmCompany;
 import com.mr.app.android.storesample.domain.model.local.entity.RealmProduct;
+import com.mr.app.android.storesample.domain.model.local.entity.RealmUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,13 @@ public class EntityParser {
         return new Company(
                 realmCompany.getId(),
                 realmCompany.getName());
+    }
+
+    public static User parseRealmUserToUser(RealmUser realmUser){
+        return new User(
+                realmUser.getId(),
+                realmUser.getEmail(),
+                realmUser.getName());
     }
 
     public static List<Product> parseRealmProductsToProducts(List<RealmProduct> realmProducts) {
@@ -47,10 +56,18 @@ public class EntityParser {
                 product.getSellerId());
     }
 
-    private static RealmCompany parseCompanyToRealmCompany(Company seller) {
+    public static RealmCompany parseCompanyToRealmCompany(Company seller) {
         return new RealmCompany(
                 seller.getId(),
                 seller.getName());
+    }
+
+    public static RealmUser parseUserToRealmUser(User user, boolean isLoggedIn){
+        return new RealmUser(
+                user.getId(),
+                user.getEmail(),
+                user.getName(),
+                isLoggedIn);
     }
 
     public static List<RealmProduct> parseProductsToRealmProducts(List<Product> products) {

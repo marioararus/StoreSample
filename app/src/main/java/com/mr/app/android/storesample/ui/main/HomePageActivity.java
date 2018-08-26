@@ -2,6 +2,7 @@ package com.mr.app.android.storesample.ui.main;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import com.mr.app.android.storesample.R;
 import com.mr.app.android.storesample.data.Company;
 import com.mr.app.android.storesample.data.Product;
+import com.mr.app.android.storesample.ui.auth.LoginActivity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -105,7 +107,10 @@ public class HomePageActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_log_out) {
+            homeViewModel.logOut();
+            startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
+            finish();
             return true;
         }
 
