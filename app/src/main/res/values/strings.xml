@@ -3,6 +3,7 @@
     <string name="sign_in">SIGN IN FACEBOOK</string>
     <string name="home">Home Page</string>
     <string name="store_name">HEPHAESTUS</string>
+    <string name="store_name_lowercase">Hephaestus</string>
     <string name="best_store">BEST ONLINE STORE</string>
     <string name="facebook_app_id" translatable="false">1965822980106996</string>
     <string name="fb_login_protocol_scheme">fb1965822980106996</string>

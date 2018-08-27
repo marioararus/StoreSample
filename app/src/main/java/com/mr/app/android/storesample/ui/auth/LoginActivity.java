@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException exception) {
-                Toast.makeText(LoginActivity.this, "Login button pressed onError", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "No internet connection.", Toast.LENGTH_LONG).show();
             }
         });
     }
