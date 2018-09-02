@@ -1,12 +1,14 @@
 package com.mr.app.android.storesample.ui.main;
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.mr.app.android.storesample.data.Company;
 import com.mr.app.android.storesample.data.Product;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Marioara Rus on 8/25/2018.
@@ -26,18 +29,19 @@ public class ProductsFragment extends Fragment {
 
     private static final String ARG_PRODUCTS = "key_products";
     private static final String ARG_COMPANY = "key_company";
-    private Company company;
-    private List<Product> products;
+    private Long companyId;
+    private List<Long> productsIds;
     private RecyclerView rvProducts;
     private ProductsAdapter productsAdapter;
+    private HomeViewModel homeViewModel;
 
     @SuppressLint("ValidFragment")
     private ProductsFragment() {
     }
 
-    public static ProductsFragment newInstance(List<Product> productList, Company company) {
-        String productsJson = new Gson().toJson(productList);
-        String companyJson = new Gson().toJson(company);
+    public static ProductsFragment newInstance(List<Long> productIdList, Long companyId) {
+        String productsJson = new Gson().toJson(productIdList);
+        String companyJson = new Gson().toJson(companyId);
         ProductsFragment fragment = new ProductsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_COMPANY, companyJson);
@@ -52,9 +56,9 @@ public class ProductsFragment extends Fragment {
         productsAdapter = new ProductsAdapter();
         String companyJson = getArguments().getString(ARG_COMPANY);
         String productsJson = getArguments().getString(ARG_PRODUCTS);
-        products = new Gson().fromJson(productsJson, new TypeToken<List<Product>>() {
+        productsIds = new Gson().fromJson(productsJson, new TypeToken<List<Long>>() {
         }.getType());
-        company = new Gson().fromJson(companyJson, Company.class);
+        companyId = new Gson().fromJson(companyJson, Long.class);
     }
 
     @Override
@@ -67,8 +71,16 @@ public class ProductsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvProducts = view.findViewById(R.id.rv_products);
-        rvProducts.setLayoutManager(new LinearLayoutManager(getContext()));
+        homeViewModel = new HomeViewModel();
+        homeViewModel.getCompaniesAndProducts(companyId, productsIds).observe(this, new Observer<Pair<Company, List<Product>>>() {
+                    @Override
+                    public void onChanged(@Nullable Pair<Company, List<Product>> companyListPair) {
+                        if(companyListPair!=null){
+                            productsAdapter.setProducts(companyListPair.second);
+                        }
+                    }
+                });
+                rvProducts.setLayoutManager(new LinearLayoutManager(getContext()));
         rvProducts.setAdapter(productsAdapter);
-        productsAdapter.setProducts(products);
     }
 }

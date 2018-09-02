@@ -21,6 +21,7 @@ import com.mr.app.android.storesample.data.Company;
 import com.mr.app.android.storesample.data.Product;
 import com.mr.app.android.storesample.ui.auth.LoginActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,7 +136,12 @@ public class HomePageActivity extends AppCompatActivity {
             int i = 0;
             for (Company key : productMap.keySet()) {
                 if (i == position) {
-                    return ProductsFragment.newInstance(productMap.get(key), key);
+
+                    List<Long> productIds = new ArrayList<>();
+                    for(Product product: productMap.get(key)){
+                        productIds.add(product.getId());
+                    }
+                    return ProductsFragment.newInstance(productIds, key.getId());
                 }
                 i++;
             }
